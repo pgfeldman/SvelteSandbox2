@@ -1,7 +1,7 @@
 import * as amqp from 'amqplib'
 
-let client:amqp.Connection
-let clientPromise
+let client;
+let clientPromise: Promise<amqp.Connection>;
 
 if (process.env.NODE_ENV === 'development') {
 

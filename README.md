@@ -36,3 +36,8 @@ npm run build
 ```
 
 > You can preview the built app with `npm run preview`, regardless of whether you installed an adapter. This should _not_ be used to serve your app in production.
+
+
+## Running RabbitMq with Docker
+
+- Run docker run -d --hostname localhost --name jojo-rabbit -p 5672:5672 rabbitmq:3

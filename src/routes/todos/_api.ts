@@ -1,6 +1,7 @@
 import type { Request } from '@sveltejs/kit';
 import type { Locals } from '$lib/types';
-import * as amqp from 'amqplib'
+// import * as amqp from 'amqplib'
+import { getAmqpChannel } from '$lib/amqpChannel';
 
 /*
 	This module is used by the /todos.json and /todos/[uid].json
@@ -23,11 +24,12 @@ export async function api(request: Request<Locals>, resource: string, data?: {})
 
 	// This is where we send a message in a slapdash, hacky way, based (loosely) on the tutorial at
 	// https://www.rabbitmq.com/tutorials/tutorial-one-javascript.html
-	const amqpConnection = await amqp.connect('amqp://localhost');
+	// const amqpConnection = await amqp.connect('amqp://localhost');
 
-	const amqpChannel = await amqpConnection.createChannel()
+	// const amqpChannel = await amqpConnection.createChannel()
+	const amqpChannel = await getAmqpChannel();
 
-	const queueStatus = await amqpChannel.assertQueue('hello', {durable:false})
+	await amqpChannel.assertQueue('hello', {durable:false})
 
 	for (let i = 0; i < 10; ++i){
 		const msg = `hello from SveltKit [${i}]`
