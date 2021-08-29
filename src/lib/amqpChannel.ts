@@ -1,14 +1,21 @@
 import clientPromise from "$lib/amqp";
 import type { Channel, Message } from "amqplib";
+import { sendMessage } from './webSocket/socket';
 
 let channel: Channel;
 
 function onMesasge(message: Message | null) {
-    console.log('Received Message in amqpChannel.ts', message.content.toString());
+    if (message) {
+        console.log('Received Message in amqpChannel.ts', message.content.toString());
+        channel.ack(message);
+        sendMessage(message.content.toString());
+    }
+
 }
 
 export async function getAmqpChannel(): Promise<Channel> {
     const client = await clientPromise;
+
     if (!channel) {
         channel = await client.createChannel();
     }

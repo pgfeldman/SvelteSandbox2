@@ -1,6 +1,5 @@
 import type { Request } from '@sveltejs/kit';
 import type { Locals } from '$lib/types';
-// import * as amqp from 'amqplib'
 import { getAmqpChannel } from '$lib/amqpChannel';
 
 /*

@@ -22,9 +22,13 @@
 	};
 </script>
 
+
 <script lang="ts">
 	import { scale } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
+	import { onMount } from 'svelte';
+	import store from '$lib/wsStore';
+	import Message from '$lib/Message.svelte';
 
 	type Todo = {
 		uid: string;
@@ -44,6 +48,16 @@
 			return t;
 		});
 	}
+
+	let message;
+	let messages = [];
+
+	onMount(() => {
+		store.subscribe(currentMessage => {
+			console.log('Got message!', currentMessage)
+				messages = [...messages, currentMessage];
+		});
+	})
 </script>
 
 <svelte:head>
@@ -52,6 +66,11 @@
 
 <div class="todos">
 	<h1>Todos</h1>
+
+	<h2>Messages from server:</h2>
+	{#each messages as message, i}
+		<Message {message} direction={i % 2 == 0 ? "left" :  "right" } />
+	{/each}
 
 	<form
 		class="new"
