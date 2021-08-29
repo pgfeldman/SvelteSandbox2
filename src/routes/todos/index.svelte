@@ -57,7 +57,14 @@
 			console.log('Got message!', currentMessage)
 				messages = [...messages, currentMessage];
 		});
-	})
+	});
+
+	function onSendMessage() {
+		 if (message.length > 0) {
+			 store.sendMessage(message);
+			 message = "";
+		 }
+	}
 </script>
 
 <svelte:head>
@@ -67,10 +74,20 @@
 <div class="todos">
 	<h1>Todos</h1>
 
-	<h2>Messages from server:</h2>
-	{#each messages as message, i}
-		<Message {message} direction={i % 2 == 0 ? "left" :  "right" } />
-	{/each}
+	<div>
+		<h2>Send message to server:</h2>
+		<input type="text" bind:value={message} />
+		<button on:click={onSendMessage}>
+			Send Message
+		</button>
+	</div>
+
+	<div>
+		<h2>Messages from server:</h2>
+		{#each messages as message, i}
+			<Message {message} direction={i % 2 == 0 ? "left" :  "right" } />
+		{/each}
+	</div>
 
 	<form
 		class="new"

@@ -23,7 +23,7 @@ if (socket) {
   });
 }
 
-const sendMessage = (message: string | ArrayBufferLike | Blob | ArrayBufferView) => {
+const sendMessage = (message: string | ArrayBufferLike | Blob | ArrayBufferView): void => {
   if (socket.readyState <= 1) {
     socket.send(message);
   }

@@ -28,7 +28,7 @@ export async function api(request: Request<Locals>, resource: string, data?: {})
 	// const amqpChannel = await amqpConnection.createChannel()
 	const amqpChannel = await getAmqpChannel();
 
-	await amqpChannel.assertQueue('hello', {durable:false})
+	await amqpChannel.assertQueue('hello', {durable:false});
 
 	for (let i = 0; i < 10; ++i){
 		const msg = `hello from SveltKit [${i}]`
